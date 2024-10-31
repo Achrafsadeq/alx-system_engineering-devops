@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#Write a script to display a 12-hour and 59-minute time format using nested loops.
+
+hour=0
+while [ $hour -le 12 ]
+do
+    echo "Hour: $hour"
+    minute=1
+    while [ $minute -le 59 ]
+    do
+        echo $minute
+        ((minute++))
+    done
+    ((hour++))
+done

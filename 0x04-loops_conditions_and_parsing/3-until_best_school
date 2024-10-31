@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# This script is displaying "Best School" 10 times
+
+var="Best School"  # Defines the variable 'var' with the value "Best School"
+i="1"              # Initializes the counter variable 'i' to 1
+
+while [ $i -lt 11 ]; do  # Loops while 'i' is less than 11
+    echo "$var"          # Prints the value of 'var'
+    ((i++))              # Increments 'i' by 1
+done

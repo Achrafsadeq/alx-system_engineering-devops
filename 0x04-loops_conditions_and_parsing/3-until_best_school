@@ -3,8 +3,8 @@
 
 var="Best School"
 i="1"
-
 while [ $i -lt 11 ];
-	do echo "$var"
-    ((i++))
+do echo "$var"
+  ((i++))
 done
+

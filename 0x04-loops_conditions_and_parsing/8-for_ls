@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-#Write a Bash script that gives information about the school file.
+#Write a script that lists the contents of the directory.
+#only showing names after the first dash.
 
 for _ in *
 do

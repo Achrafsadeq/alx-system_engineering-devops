@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#Write a Bash script that gives information about the school file.
+
+for _ in *
+do
+    echo "$_" | cut -f 2 -d '-'
+done

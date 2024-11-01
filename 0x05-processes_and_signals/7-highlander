@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#Write a script to handle SIGTERM signal with a message.
+
+for (( i=1; i>0; i++ ))
+do
+	echo "To infinity and beyond"
+	sleep 2
+	trap 'echo "I am invincible!!!"' SIGTERM
+done

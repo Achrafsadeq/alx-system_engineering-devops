@@ -1,0 +1,39 @@
+#!/bin/bash
+# Path for manage_my_process script and PID file.
+
+PROCESS_SCRIPT="./manage_my_process"
+PID_FILE="/var/run/my_process.pid"
+
+case "$1" in
+    start)
+        # Start the process
+        $PROCESS_SCRIPT &
+        echo $! > $PID_FILE
+        echo "manage_my_process started"
+        ;;
+    stop)
+        # Stop the process
+        if [ -f $PID_FILE ]; then
+            kill "$(cat $PID_FILE)"
+            rm -f $PID_FILE
+            echo "manage_my_process stopped"
+        else
+            echo "manage_my_process is not running"
+        fi
+        ;;
+    restart)
+        # Restart the process
+        if [ -f $PID_FILE ]; then
+            kill "$(cat $PID_FILE)"
+            rm -f $PID_FILE
+        fi
+        $PROCESS_SCRIPT &
+        echo $! > $PID_FILE
+        echo "manage_my_process restarted"
+        ;;
+    *)
+        # Invalid or no argument
+        echo "Usage: manage_my_process {start|stop|restart}"
+        exit 1
+        ;;
+esac

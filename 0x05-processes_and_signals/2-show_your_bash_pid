@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#Write a script that displays the PID of a given process name.
+
+ps -auxf | grep bash

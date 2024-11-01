@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#Write a script to use signals to stop and continue a process.
+
+pkill -f 4-to_infinity_and_beyond

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#Write a script that kills multiple instances of a process by name.
+
+kill "$(pgrep -f 4-to_infinity_and_beyond)"

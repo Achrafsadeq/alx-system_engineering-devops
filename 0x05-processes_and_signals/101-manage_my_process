@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#Implement a script that restarts itself upon receiving SIGHUP.
+# Manages 'manage_my_process'
 
 if [ "${1}" == "start" ]
 then

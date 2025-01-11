@@ -1,6 +1,5 @@
-# Use Puppet to configure the SSH client to use a private key 
-and refuse password authentication.
-
+# Use Puppet to configure the SSH client to use a private key
+ 
 file_line { 'Turn off passwd auth':
   ensure => 'present',
   path   => '/etc/ssh/ssh_config',

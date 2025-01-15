@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Installs and configures Nginx with custom 404 page
+
+# Update package lists and install nginx with -y flag
+apt-get update
+apt-get install -y nginx
+
+# Create a basic HTML file with "Hello World!"
+echo "Hello World!" > /var/www/html/index.html
+
+# Create custom 404 page
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+
+# Configure redirect for /redirect_me
+config_file="/etc/nginx/sites-available/default"
+redirect_string="location /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}"
+sed -i "/server_name _;/a \\\t$redirect_string" "$config_file"
+
+# Configure custom 404 page
+error_page="error_page 404 /404.html;\n\tlocation = /404.html {\n\t\troot /var/www/html;\n\t\tinternal;\n\t}"
+sed -i "/server_name _;/a \\\t$error_page" "$config_file"
+
+# Ensure nginx is listening on port 80
+sed -i 's/listen 80 default_server;/listen 80;/' "$config_file"
+
+service nginx start
+
+service nginx status || service nginx restart

@@ -9,7 +9,8 @@ set -e
 var=$(hostname)
 
 # Define strings for Nginx configuration
-new_string=$(printf "error_page 404 /custom_404.html;\nlocation /redirect_me {\n\treturn 301 \$scheme://www.google.com;\n}")
+new_string=$(printf "error_page 404 /custom_404.html;
+\nlocation /redirect_me {\n\treturn 301 \$scheme://www.google.com;\n}")
 new_string2=$(printf "server {\n\tadd_header X-Served-By $var;")
 
 # Update and install Nginx

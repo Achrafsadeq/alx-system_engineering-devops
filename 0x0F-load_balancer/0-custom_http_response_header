@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# 0-custom_http_response_header
+# Configure Nginx to include a custom header and set up custom error pages
+
+# Exit on error
+set -e
+
+# Get the hostname
+var=$(hostname)
+
+# Define strings for Nginx configuration
+new_string=$(printf "error_page 404 /custom_404.html;\nlocation /redirect_me {\n\treturn 301 \$scheme://www.google.com;\n}")
+new_string2=$(printf "server {\n\tadd_header X-Served-By $var;")
+
+# Update and install Nginx
+apt-get update -y
+apt-get install nginx -y
+
+# Create custom HTML files
+echo "Hello World!" > /usr/share/nginx/html/index.html
+mkdir -p /var/www/html
+echo "Ceci n'est pas une page" > /var/www/html/custom_404.html
+
+# Backup Nginx configuration
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
+
+# Modify Nginx configuration
+sudo sed -i -E "s/^[^#]+location \/ \{/$new_string/" /etc/nginx/sites-available/default
+sudo sed -i -E "s/^server \{/$new_string2/" /etc/nginx/sites-available/default
+
+# Test Nginx configuration and reload
+sudo nginx -t && sudo nginx -s reload
+
+echo "Nginx configuration updated successfully!"

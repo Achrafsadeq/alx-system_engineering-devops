@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# 1-install_load_balancer
+
+# Update and install HAProxy
+sudo apt-get update -y
+sudo apt-get install -y haproxy
+
+# Backup the original HAProxy configuration
+sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
+
+# Configure HAProxy to distribute traffic between web-01 and web-02
+cat <<EOF | sudo tee /etc/haproxy/haproxy.cfg > /dev/null
+global
+    log /dev/log    local0
+    log /dev/log    local1 notice
+    chroot /var/lib/haproxy
+    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
+
+    # Default SSL material locations
+    ca-base /etc/ssl/certs
+    crt-base /etc/ssl/private
+
+    # See: https://ssl-config.mozilla.org/#server=haproxy&version=2.0.3&config=intermediate
+    ssl-default-bind-ciphers PROFILE=SYSTEM
+    ssl-default-bind-options no-sslv3
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms
+
+frontend http_front
+    bind *:80
+    default_backend http_back
+
+backend http_back
+    balance roundrobin
+    server web-01 $(dig +short 100.26.167.224-web-01):80 check
+    server web-02 $(dig +short 35.174.209.37-web-02):80 check
+EOF
+
+# Restart HAProxy to apply the new configuration
+sudo systemctl restart haproxy
+
+# Enable HAProxy to start on boot
+sudo systemctl enable haproxy
+
+echo "HAProxy installed and configured successfully!"

@@ -2,7 +2,6 @@
 # 0-custom_http_response_header
 # Configure Nginx to include a custom header and set up custom error pages
 
-# Exit on error
 set -e
 
 # Get the hostname

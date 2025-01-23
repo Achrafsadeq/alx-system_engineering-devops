@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 # Create a shorter version of the fix script (5 lines or less)
-# Step 1: Create a symbolic link to enable the default Nginx site configuration
-sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-
-# Step 2: Restart the Nginx service to apply the changes
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 sudo service nginx restart
 rm /run/nginx.pid

@@ -15,8 +15,6 @@ display_subdomain_info() {
     fi
 }
 
-
-
 main() {
     local domain=$1
     local specific_subdomain=$2

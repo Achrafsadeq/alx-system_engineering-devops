@@ -1,41 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Function to fetch and display subdomain information.
 
-# Function to fetch and display subdomain information
-display_subdomain_info() {
-    local domain=$1
-    local subdomain=$2
-
-    # Use dig to get the DNS record of the subdomain
-    record=$(dig "$subdomain.$domain" +short)
-
-    if [[ -n $record ]]; then
-        echo "The subdomain $subdomain is a A record and points to $record"
-    else
-        echo "The subdomain $subdomain does not have an A record."
-    fi
+dns_config () {
+    script=$(dig "$2"."$1" | grep -A1 'ANSWER SECTION:' | tr '\t' '\n' | tail -2 | tr '\n' ' ')
+    echo "$2 $script" | awk '{print "The subdomain " $1 " is a " $2 " record and points to " $3}'
 }
 
-# Main script logic
-main() {
-    local domain=$1
-    local specific_subdomain=$2
-
-    if [[ -z $domain ]]; then
-        echo "Error: Domain name is required."
-        exit 1
-    fi
-
-    # If a specific subdomain is provided, display its information
-    if [[ -n $specific_subdomain ]]; then
-        display_subdomain_info "$domain" "$specific_subdomain"
-    else
-        # Default subdomains to audit
-        subdomains=(www lb-01 web-01 web-02)
-        for sub in "${subdomains[@]}"; do
-            display_subdomain_info "$domain" "$sub"
-        done
-    fi
-}
-
-main "$1" "$2"
-
+if [ "$#" == 1 ]
+then
+  dns_config "$1" "www"
+  dns_config "$1" "lb-01"
+  dns_config "$1" "web-01"
+  dns_config "$1" "web-02"
+elif [ "$#" == 2 ]
+then
+  dns_config "$1" "$2"
+fi

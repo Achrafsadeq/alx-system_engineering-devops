@@ -8,6 +8,8 @@ global
         group haproxy
         daemon
 
+        #dhparam
+        tune.ssl.default-dh-param 2048
         # Default SSL material locations
         ca-base /etc/ssl/certs
         crt-base /etc/ssl/private
@@ -32,19 +34,13 @@ defaults
         errorfile 502 /etc/haproxy/errors/502.http
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
-frontend clickviral-frontend
+frontend deplo
     bind *:80
-    mode http
-    http-request redirect scheme https code 301 unless { ssl_fc }
-    http-request set-header X-Forwarded-Proto http
-    default_backend clickviral-backend
-
-frontend clickviral-frontend-https
     bind *:443 ssl crt /etc/letsencrypt/live/www.deplo.tech/deplo.pem
-    http-request set-header X-Forwarded-Proto https
-    default_backend clickviral-backend
+    mode http
+    default_backend app
 
-backend clickviral-backend
+backend app
     balance roundrobin
     server web-01 54.158.183.40 check
     server web-02 35.174.205.229 check

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Query and display DNS information for domain subdomains
 #
-# Usage: ./script <domain> [<subdomain>]
+# Usage:
 # - With one argument: Checks predefined subdomains (www, lb-01, web-01, web-02)
 # - With two arguments: Checks the specified subdomain
 

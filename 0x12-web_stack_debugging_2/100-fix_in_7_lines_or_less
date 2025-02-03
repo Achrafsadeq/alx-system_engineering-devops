@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Fix Nginx configuration in 7 lines or less
+sed -i 's/^user .*;/user nginx;/; s/listen 80;/listen 8080;/' /etc/nginx/nginx.conf
+service nginx restart

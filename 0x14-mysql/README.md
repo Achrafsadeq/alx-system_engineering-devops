@@ -1,6 +1,5 @@
 # 0x14. MySQL
 
-
 ## Background Context
 
 This project focuses on setting up and managing MySQL databases, including replication and backups. By completing this project, you will gain hands-on experience with MySQL configuration, user management, replication, and backup strategies.

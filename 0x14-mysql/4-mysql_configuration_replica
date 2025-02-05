@@ -1,0 +1,18 @@
+[mysqld]
+server-id=1
+log_bin=mysql-bin
+datadir=/var/lib/mysql
+binlog_do_db=tyrell_corp
+#bind-address=127.0.0.1  # Commented out as per instructions
+
+[client]
+default-character-set=utf8mb4
+
+[mysqld]
+server-id=2
+datadir=/var/lib/mysql
+relay-log=mysql-relay-bin
+log_bin=mysql-bin
+read_only=1
+replicate_do_db=tyrell_corp
+relay-log       = /var/log/mysql/mysql-relay-bin.log

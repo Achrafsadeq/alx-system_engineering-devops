@@ -22,9 +22,3 @@ mysqldump --all-databases -u root --password="$1" > backup.sql
 # -v: Verbose mode (show progress)
 # -f: Specify the filename for the archive
 tar -czvf "$fule_file_name" backup.sql
-
-# Clean up the uncompressed backup file to save space
-rm backup.sql
-
-# Print a success message
-echo "Backup completed successfully: $fule_file_name"

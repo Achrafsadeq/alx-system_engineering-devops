@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Check if the password argument is provided
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <mysql_root_password>"
+    exit 1
+fi
+
+MYSQL_PASS=$1
+BACKUP_FILE="backup.sql"
+ARCHIVE_FILE="$(date +%d-%m-%Y).tar.gz"
+
+# Create MySQL dump
+mysqldump -u root -p$MYSQL_PASS --all-databases > $BACKUP_FILE
+
+# Compress the dump file
+tar -czvf $ARCHIVE_FILE $BACKUP_FILE
+
+# Clean up the uncompressed SQL dump
+rm $BACKUP_FILE
+
+echo "Backup completed: $ARCHIVE_FILE"

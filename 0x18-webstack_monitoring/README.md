@@ -13,6 +13,7 @@ Monitoring your web stack is crucial for ensuring the reliability, performance, 
 | **Bash Scripts** | All Bash scripts must be executable and pass Shellcheck (version 0.3.7) without errors |
 | **Datadog Account** | You must sign up for a free Datadog account and install the Datadog agent on your server |
 
+
 ## More Info
 
 ### Install Datadog Agent

@@ -1,0 +1,24 @@
+server {
+    # Listen for incoming connections on port 80
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+
+    # Define the server's domain name or IP address
+    server_name 54.237.3.94;
+
+    # Add a custom response header to show which server handled the request
+    add_header X-Served-By $HOSTNAME;
+
+    # Proxy requests to /airbnb-onepage/ to the local Flask application running on port 5000
+    location = /airbnb-onepage/ {
+        proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
+    }
+
+    # Define a custom error page for 400 and 404 errors
+    error_page 400 /404.html;
+
+    location /404 {
+        root /var/www/html;
+        internal;  # Prevent direct access to this location from users
+    }
+}
